@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@300;500;600&display=swap');
+
+body, html {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    overflow: hidden; font-family: 'Anuphan', sans-serif;
+
+    /* --- ส่วนที่แก้ไข: ใส่รูปภาพพื้นหลัง --- */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('Myspace.png'); 
+    background-size: cover;      /* ให้รูปขยายเต็มหน้าจอ */
+    background-position: center;  /* จัดวางกึ่งกลางรูป */
+    background-repeat: no-repeat; /* ไม่ให้รูปแสดงซ้ำ */
+    background-attachment: fixed; /* ล็อกรูปให้อยู่กับที่ */
+    
+    color: white;
+}
+
+#space { position: fixed; width: 100%; height: 100%; z-index: 1; }
+
+/* กล่อง UI หลัก */
+.ui-container {
+    position: relative; z-index: 10;
+    width: 340px; margin: 8vh auto; padding: 30px;
+    background: rgba(15, 20, 25, 0.85);
+    backdrop-filter: blur(20px); border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+
+h2 { font-size: 32px; margin: 0; color: #f1c40f; letter-spacing: 1px; text-shadow: 0 0 10px rgba(241, 196, 15, 0.3); }
+.subtitle { font-size: 15px; color: #888; margin-bottom: 20px; }
+
+input, textarea, select {
+    width: 100%; box-sizing: border-box;
+    margin: 8px 0; padding: 12px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.4); color: white;
+    font-family: 'Anuphan', sans-serif; outline: none;
+}
+
+/* จัดระเบียบแถบเลือกสีและขนาด */
+.config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
+.config-item span { display: block; font-size: 12px; color: #f1c40f; text-align: left; margin-bottom: 5px; }
+
+.color-picker-custom {
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    height: 45px !important; cursor: pointer; padding: 0 !important;
+}
+.color-picker-custom::-webkit-color-swatch { border-radius: 10px; border: none; }
+
+/* ระบบ Toggle สลับ สาธารณะ/ส่วนตัว */
+.privacy-selection { margin: 15px 0 25px 0; }
+.toggle-container {
+    position: relative; display: flex; background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px; padding: 4px; border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.toggle-container input { display: none; }
+.toggle-label {
+    flex: 1; padding: 10px; font-size: 14px; cursor: pointer; z-index: 2;
+    transition: 0.3s; color: #666; text-align: center;
+}
+input:checked + .toggle-label { color: #fff; font-weight: bold; }
+.selection-slider {
+    position: absolute; height: calc(100% - 8px); width: calc(50% - 4px);
+    background: rgba(241, 196, 15, 0.1); border: 1px solid rgba(241, 196, 15, 0.3);
+    border-radius: 10px; top: 4px; left: 4px; transition: 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 1;
+}
+#private:checked ~ .selection-slider { transform: translateX(100%); }
+
+/* ปุ่มปล่อยดาวสไตล์ Dark Glow (มืดเรืองแสง) */
+.btn-send-dark {
+    width: 100%; padding: 16px; border-radius: 50px; border: 1px solid rgba(241, 196, 15, 0.2);
+    background: #0a0c10; color: #f1c40f; font-weight: bold; font-size: 16px;
+    cursor: pointer; transition: 0.4s; letter-spacing: 1px;
+    font-family: 'Anuphan', sans-serif;
+}
+.btn-send-dark:hover {
+    background: #111; border-color: #f1c40f;
+    box-shadow: 0 0 20px rgba(241, 196, 15, 0.4); transform: translateY(-2px);
+}
+
+/* Star & Modal */
+.star { position: absolute; cursor: pointer; animation: floatUp linear forwards; filter: drop-shadow(0 0 8px currentColor); }
+@keyframes floatUp {
+    0% { transform: translateY(105vh); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); }
+.modal-content { background: #151921; margin: 15% auto; padding: 30px; width: 85%; max-width: 380px; border-radius: 25px; border: 1px solid #333; position: relative; }
+.close-btn { position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; color: #555; }
+.wish-display { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; margin: 15px 0; border-left: 4px solid #f1c40f; }
+.support-buttons { display: flex; gap: 8px; margin-top: 10px; }
+.btn-support { flex: 2; background: #2ecc71; border: none; padding: 10px; border-radius: 10px; color: white; cursor: pointer; 
+font-family: 'Anuphan', sans-serif;
+ }
+.btn-heart { 
+    flex: 1; 
+    background: #e74c3c; 
+    border: none; padding: 10px; 
+    border-radius: 10px; color: white; 
+    cursor: pointer; 
+    font-family: 'Anuphan', sans-serif;
+}
+/* สร้างการหมุนแบบวงกลม 360 องศา */
+/* สร้าง Animation ใหม่ให้ลอยจากล่างสุดไปบนสุด พร้อมหมุน */
+@keyframes floatingAndRotating {
+    0% {
+        /* เริ่มที่ใต้หน้าจอ (ล่างสุด) */
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        /* ค่อยๆ สว่างขึ้นตอนโผล่พ้นขอบล่าง */
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        /* จบที่พ้นขอบบน */
+        transform: translateY(-20vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+#space {
+    pointer-events: none; /* ห้ามให้พื้นหลังมาขวางเมาส์ */
+}
+
+.star {
+    z-index: 999;
+    pointer-events: auto !important; /* ให้ดาวรับการคลิกได้ */
+}
+/* UI กรอกข้อมูลต้องกดได้ปกติ */
+.ui-container {
+    position: relative;
+    z-index: 200; /* อยู่หน้าดาว */
+}
+
+/* หน้าต่าง Modal ต้องอยู่หน้าสุด */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+}
+/* เพิ่มคลาสสำหรับทำให้ดาวค่อยๆ จาง */
+.star.fade-out {
+    opacity: 0 !important;
+    transition: opacity 1.5s ease-out; /* จะใช้เวลา 1.5 วินาทีในการค่อยๆ จาง */
+}
+
+/* ปรับ Keyframes เดิม (เอา opacity: 0 ในตอนจบออก เพื่อให้เราคุมผ่าน JS แทน) */
+@keyframes floatingAndRotating {
+    0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% {
+        transform: translateY(-20vh) rotate(360deg);
+        /* ลบ opacity: 0 ตรงนี้ออกเพื่อให้ JS คุมจังหวะจาง */
+    }
+}
+.music-btn {
+    position: fixed;
+    top: 20px;
+    right: 80px; /* วางถัดจากปุ่มซ่อน UI */
+    z-index: 999;
+    padding: 10px 15px;
+    background: rgba(15, 20, 25, 0.8);
+    border: 1px solid #f1c40f;
+    color: #f1c40f;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Anuphan', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.music-btn:hover {
+    background: rgba(241, 196, 15, 0.2);
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+}
+/* แถบเลื่อน (Scrollbar) ของคอมเมนต์ */
+#supportList::-webkit-scrollbar {
+    width: 4px;
+}
+#supportList::-webkit-scrollbar-thumb {
+    background: rgba(241, 196, 15, 0.3);
+    border-radius: 10px;
+}
+
+/* แอนิเมชันตอนคอมเมนต์เด้งขึ้นมา */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-bubble:hover {
+    background: rgba(255,255,255,0.1) !important;
+    transition: 0.3s;
+}
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px; /* ขยายขนาดให้กดง่าย */
+    color: #666;
+    cursor: pointer;
+    z-index: 9999; /* มั่นใจว่าอยู่หน้าสุด ไม่โดนอะไรบัง */
+    padding: 10px; /* เพิ่มพื้นที่ให้เอาเมาส์จิ้มโดนง่ายขึ้น */
+}
+
+.close-button:hover {
+    color: #f1c40f; /* เปลี่ยนสีเมื่อเอาเมาส์วาง จะได้รู้ว่ากดได้ */
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/Anuphan/var/Anuphan[wght].css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wishes - จักรวาลแห่งคำอธิษฐาน</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="space"></div>
+
+    <div class="ui-container">
+        <h2> STAR WISHES</h2>
+        <p class="subtitle">ฝากความปรารถนาของคุณลอยไปสู่ดวงดาว</p>
+        
+        <div class="input-group">
+            <input type="text" id="userName" placeholder="ชื่อของคุณ (หรือปล่อยว่าง)">
+            <textarea id="wishText" rows="3" placeholder="เขียนคำอธิษฐานของคุณ..."></textarea>
+            
+            <div class="config-grid">
+                <div class="config-item">
+                    <span>เลือกสีดาว</span>
+                    <input type="color" id="starColor" value="#f1c40f" class="color-picker-custom">
+                </div>
+                <div class="config-item">
+                    <span>ขนาดดาว</span>
+                    <select id="starSize">
+                        <option value="20px">ดวงเล็ก</option>
+                        <option value="35px" selected>ดวงกลาง</option>
+                        <option value="50px">ดวงใหญ่</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="privacy-selection">
+                <div class="toggle-container">
+                    <input type="radio" name="privacy" value="public" id="public" checked>
+                    <label for="public" class="toggle-label">🌏 สาธารณะ</label>
+
+                    <input type="radio" name="privacy" value="private" id="private">
+                    <label for="private" class="toggle-label">🔒 ส่วนตัว</label>
+                    
+                    <div class="selection-slider"></div>
+                </div>
+            </div>
+
+            <button class="btn-send-dark" onclick="sendWish()">ปล่อยดาวขึ้นฟ้า </button>
+        </div>
+    </div>
+
+    <div id="wishModal" class="modal" onclick="closeModalOutside(event)">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h3 id="modalName"></h3>
+            <div class="wish-display">
+    <p id="modalText" style="font-size: 18px; line-height: 1.6;"></p>
+    
+    <div style="text-align: left; margin-top: 20px;">
+        <span style="font-size: 14px; color: #f1c40f;">✨ ข้อความจากเพื่อนร่วมทาง:</span>
+        <div id="supportList" style="max-height: 180px; overflow-y: auto; margin-top: 10px; padding-right: 5px;">
+            </div>
+    </div>
+
+    <div style="display: flex; gap: 8px; margin-top: 15px;">
+        <input type="text" id="supportInput" placeholder="เขียนให้กำลังใจ..." 
+               style="flex: 1; margin: 0; padding: 10px; font-size: 13px; border-radius: 20px;">
+        <button onclick="sendSupport()" 
+                style="background: #f1c40f; color: #000; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold;">
+            ส่ง
+        </button>
+    </div>
+</div>
+            <div id="supportList"></div>
+        
+    </div>
+    <audio id="bg-music" loop autoplay>
+    <source src="assets/sounds/ambient-space.mp3" type="audio/mpeg">
+</audio>
+
+<button id="music-toggle" class="music-btn" onclick="toggleMusic()">
+    🔈 ปิดเพลง
+</button>
+<audio id="sfx-wish" src="assets/sounds/wish.mp3" preload="auto"></audio>
+<audio id="sfx-click" src="assets/sounds/click.mp3" preload="auto"></audio>
+<audio id="sfx-launch" preload="auto">
+    <source src="assets/sounds/launch.mp3" type="audio/mpeg">
+</audio>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+<script>
+  // วาง config ที่ก๊อปมาจาก Firebase ตรงนี้
+  const firebaseConfig = {
+  apiKey: "AIzaSyA8KLb6PC8hp81hEfJPQhA_kGWsCpjNTAA",
+  authDomain: "starwish-df324.firebaseapp.com",
+  databaseURL: "https://starwish-df324-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "starwish-df324",
+  storageBucket: "starwish-df324.firebasestorage.app",
+  messagingSenderId: "474942226762",
+  appId: "1:474942226762:web:d120254eb08f8be5ea81b3",
+  measurementId: "G-HSJ1WEM91M"
+};
+  
+  // เริ่มต้น Firebase
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+</script>
+    <script src="script.js"></script>
+</body>
+</html>
